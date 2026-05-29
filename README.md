@@ -222,6 +222,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines and the contribut
 - **Questions about a preset?** Check its README or open an issue in this repository
 - **Want to request a preset?** Open an issue with the tag `preset-request` and describe your tool and use case
 - **Having trouble installing or using a preset in `sqi`?** See the main `sqi` documentation or open an issue in the [main `sqi` repository](https://github.com/uberware/sqi)
+- **Other questions?** Use the [sqi Discussions](https://github.com/uberware/sqi/discussions) to ask questions from the `sqi` community
 
 ---
 
