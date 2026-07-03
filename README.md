@@ -8,68 +8,101 @@ Welcome to the `sqi` community preset library. This repository contains ready-to
 
 ## What is a preset?
 
-In `sqi`, a **preset** is a ready-to-use **product definition** — a structured description of how to run a specific tool or workload on the farm. It bridges the gap between raw OpenJD job descriptions (low-level, detailed) and user-facing submission forms (high-level, friendly).
+In `sqi`, a **preset** is a **product definition file** — catalog metadata paired with an inline OpenJD job template. The two-part structure looks like this:
 
-A preset defines:
+```
+┌──────────────────────────────────────────────────┐
+│  Catalog envelope (preset metadata)              │
+│  name · title · description · category · version │
+│  ┌────────────────────────────────────────────┐  │
+│  │  OpenJD template (verbatim)                │  │
+│  │  parameterDefinitions · steps · …          │  │
+│  └────────────────────────────────────────────┘  │
+└──────────────────────────────────────────────────┘
+```
 
-- **What tool or workload it covers** — e.g., "Arnold Rendering", "Houdini Simulation", "ffmpeg Transcoding"
-- **User-facing parameters** — the controls an artist or operator sees in a submission form
-- **How parameters map to commands** — the translation from user inputs to actual command-line arguments, environment variables, or other execution details
-- **Path handling** — how input files, outputs, and working directories are resolved across different worker environments
-- **Environment setup** — software versions, licensing, dependencies, and configuration
-- **Compute requirements** — CPU, GPU, memory, and license constraints
+The preset layer adds **only** the catalog envelope. Everything else — parameter definitions and their UI control hints, command-line arguments, path handling, machine requirements, setup/teardown steps — lives **inside** the OpenJD template, exactly as it would in any OpenJD job description. There is no separate preset-level schema for those concerns.
 
-Once a preset is installed, artists can submit jobs to the farm without writing code or understanding OpenJD. They fill out a simple form tailored to their tool, and `sqi` handles the rest.
+When a preset is installed, `sqi` stores it as a product. Artists can then submit jobs from the **Admin hub → Preset Library** without writing YAML: `sqi` renders a form from the template's `userInterface` hints, collects values, and posts the job.
 
 ### Example: Arnold Render Preset
 
 ```yaml
-name: arnold-render
-description: "Arnold rendering with support for multiple output drivers and sample controls"
-tool: arnold
-version: "7.1.0"
-
-parameters:
-  scene_file:
-    type: file_input
-    description: "Scene file to render (.ass, .usd, .mb, etc.)"
-    required: true
-  output_dir:
-    type: path
-    description: "Output directory for rendered frames"
-    required: true
-  frame_range:
-    type: frame_range
-    description: "Frames to render (e.g., 1-100, 1-100x5 for every 5th frame)"
-  samples:
-    type: integer
-    description: "Camera (AA) samples"
-    default: 128
-    min: 1
-    max: 1024
-  ai_denoiser:
-    type: boolean
-    description: "Enable OptiX denoiser"
-    default: false
-  num_threads:
-    type: integer
-    description: "Render threads (-1 = auto-detect)"
-    default: -1
-
-command_template: |
-  kick -i {scene_file} -o {output_dir}/beauty.exr \
-    -as {samples} \
-    -threads {num_threads} \
-    {if:ai_denoiser:-denoiser optix}
-
-path_resolution:
-  scene_file: inline
-  output_dir: environment_var
-  
-license_requirements:
-  arnold:
-    consumes: 1
+name: studio/arnold-render
+title: Arnold Render
+description: Render a scene with Arnold over a frame range.
+category: Rendering
+version: 1.0.0
+template:
+  specificationVersion: jobtemplate-2023-09
+  name: Arnold Render
+  parameterDefinitions:
+    - name: SceneFile
+      type: PATH
+      userInterface:
+        control: CHOOSE_INPUT_FILE
+        label: Scene File
+    - name: Frames
+      type: STRING
+      default: 1-100
+      userInterface:
+        control: LINE_EDIT
+        label: Frame Range
+  steps:
+    - name: Render
+      parameterSpace:
+        taskParameterDefinitions:
+          - name: Frame
+            type: INT
+            range: "{{Param.Frames}}"
+      script:
+        actions:
+          onRun:
+            command: kick
+            args: ["-i", "{{Param.SceneFile}}", "-frame", "{{Task.Param.Frame}}"]
 ```
+
+The `name` slug (e.g. `studio/arnold-render`) is the stable identity used by `sqi` to reference the product. Namespaced names (one `/`) are recommended for community presets to avoid collisions.
+
+---
+
+## Index & hosting
+
+`sqi` discovers presets via a static **`index.json`** at the root of this repository, served over GitHub Pages at:
+
+```
+https://uberware.github.io/sqi-presets/index.json
+```
+
+Each entry in the index points to a definition file and carries the content hash that `sqi` verifies on install:
+
+```json
+{
+  "presets": [
+    {
+      "name": "studio/arnold-render",
+      "title": "Arnold Render",
+      "description": "Render a scene with Arnold over a frame range.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "presets/rendering/arnold-render.yaml",
+      "sha256": "<hex digest of the definition file's content>"
+    }
+  ]
+}
+```
+
+| Field | Description |
+|---|---|
+| `name` | Stable slug, matches the `name` field in the definition file. |
+| `title` | Human-readable name shown in the Preset Library browser. |
+| `description` | Short summary shown in the Preset Library browser. |
+| `category` | Group label for filtering. |
+| `version` | Semver string from the definition file. |
+| `definition` | Repo-relative path to the `.yaml` or `.json` definition file. |
+| `sha256` | SHA-256 hex digest of the definition file's content. `sqi` verifies this on install and rejects the file if it does not match. |
+
+> **GitHub Pages must be enabled** for the default URL above to resolve. A maintainer enables it once via **Settings → Pages → deploy from `main`, root**. This is not part of contributing a preset.
 
 ---
 
@@ -77,13 +110,12 @@ license_requirements:
 
 ### For artists and operators
 
-1. **Browse available presets** in the `sqi` web UI under Settings → Presets
-2. **Install** a preset with one click — it's downloaded from this repository and registered with your `sqi` farm
-3. **Customize** a preset's defaults if needed (e.g., adjust default sample counts or add studio-specific environment variables)
-4. **Submit jobs** — in the web UI or from within your DCC (Maya, Houdini, Nuke) using the matching DCC submitter
-5. **Track jobs** — monitor progress in real time through the web UI
+1. **Browse available presets** in the `sqi` web UI under **Admin hub → Preset Library**
+2. **Install** a preset with one click — `sqi` downloads the definition, verifies its SHA-256 hash, validates the template, and stores it as an installed product
+3. **Submit jobs** using the installed preset — select it from the product picker, fill in the form, and submit
+4. **Track jobs** — monitor progress in real time through the web UI
 
-Presets are versioned. You can update to newer versions, pin to a specific version, or maintain local variants.
+Installed presets are **read-only**: the underlying template is managed by the preset library. If you want to customize a preset (adjust defaults, add parameters, change the command), use **Duplicate to custom** — this creates a fully editable local copy that is no longer tied to the library. To remove an installed preset, use **Uninstall** from the product detail page.
 
 ### For developers and TDs
 
@@ -162,25 +194,28 @@ Community contributions are encouraged, especially for:
 
 1. **Fork** this repository
 2. **Create a branch** for your preset — e.g., `preset/mycompany-custom-maya`
-3. **Author your preset** using YAML format with helpful comments explaining parameters and choices (see `docs/preset-spec.md` — coming soon)
-4. **Test it** against a running `sqi` farm (local or shared)
-5. **Document it** — include a README in your preset's directory explaining non-obvious parameters and setup steps
-6. **Submit a pull request** with a clear description of what the preset does and how it was tested
+3. **Author your preset** as a product definition YAML file (catalog metadata + inline OpenJD template — see the example above)
+4. **Place the file** under an appropriate directory, e.g. `presets/rendering/maya-render.yaml`
+5. **Compute the SHA-256** of your definition file: `sha256sum presets/rendering/maya-render.yaml`
+6. **Add an entry to `index.json`** with the `name`, `title`, `description`, `category`, `version`, `definition` path, and `sha256` hash
+7. **Test it** against a running `sqi` farm (local or shared) — install from the Preset Library and submit a job
+8. **Document it** — include a README in your preset's directory explaining prerequisites (software versions, path setup, etc.)
+9. **Submit a pull request** with a clear description of what the preset does and how it was tested
 
 Preset submissions should include:
 
-- `.yaml` or `.json` preset definition file(s)
-- `README.md` explaining the preset, parameters, and any prerequisites (software versions, licenses, etc.)
-- Example usage (screenshot or command line example)
-- Test results (ideally: "tested on Windows 10 with Arnold 7.1.0 and sqi v0.2.1")
+- The `.yaml` or `.json` product definition file
+- An updated `index.json` entry with the correct `sha256`
+- `README.md` in the preset's directory explaining prerequisites and non-obvious parameters
+- Test results (ideally: "tested on Linux with Arnold 7.1.0 and sqi v0.2.1")
 
 ### Contribution guidelines
 
-- **Vendor-neutral**: Avoid hardcoding tool paths; use environment variables and `sqi`'s path resolution system
-- **Clear parameter names**: Use descriptive names and help text; what seems obvious to you may not be to others
+- **Vendor-neutral**: Avoid hardcoding tool paths; use `PATH`-resolved commands or parameter-driven interpreter paths
+- **Clear parameter names and UI hints**: Use descriptive names, `userInterface.label`, and `userInterface.control` hints so the submission form renders clearly
 - **Sensible defaults**: Presets should work out of the box for common cases; advanced options can be optional
 - **Version-aware**: Call out which versions of a tool the preset supports
-- **License-aware**: If the tool requires a commercial license, include a `license_requirements` block declaring what license the preset needs and how many units each task consumes (almost always 1). If the tool is free or open source, omit the block entirely — its absence is the signal that no license pool setup is required. Note: presets declare consumption only — the pool limit (how many total licenses are available) is configured by the operator, not the preset.
+- **License-aware**: If the tool requires a commercial license, declare a usage-pool requirement in `hostRequirements.amounts` (the pool itself is configured by the operator, not the preset)
 - **Cross-platform**: When possible, support Linux, macOS, and Windows (or document where they differ)
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines and the contributor code of conduct.
