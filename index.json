@@ -1,3 +1,22 @@
 {
-  "presets": []
+  "presets": [
+    {
+      "name": "testing/render-simulator-bash",
+      "title": "Render Simulator (Bash)",
+      "description": "A no-op render that sleeps per frame. Runs a bash script; use on Linux/macOS or any worker with a bash shell.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "presets/testing/render-simulator-bash.yaml",
+      "sha256": "860d731a0bdb80e8bd37b76203c84f889eab34a6cb2f07e472c4f0358ff4395d"
+    },
+    {
+      "name": "testing/render-simulator-powershell",
+      "title": "Render Simulator (PowerShell)",
+      "description": "A no-op render that sleeps per frame. Runs a PowerShell script; for Windows workers without a bash shell.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "presets/testing/render-simulator-powershell.yaml",
+      "sha256": "b009baeba728c23b2cbaa7f0508133c68faa3fb034d53b7ffbc72ee411db766a"
+    }
+  ]
 }
