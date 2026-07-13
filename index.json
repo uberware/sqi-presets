@@ -89,24 +89,6 @@
       "version": "1.0.0",
       "definition": "testing/test-steps-powershell.yaml",
       "sha256": "121e94404a00480dea039039dc2f9de484e7cae9c97cbbae8de81b66e55a885d"
-    },
-    {
-      "name": "testing/render-simulator-bash",
-      "title": "Render Simulator (Bash)",
-      "description": "A no-op render that sleeps per frame. Runs a bash script; use on Linux/macOS or any worker with a bash shell.",
-      "category": "Testing",
-      "version": "1.0.0",
-      "definition": "presets/testing/render-simulator-bash.yaml",
-      "sha256": "093ed53c03d9d5d3d262b16cd07982b9d9e48351e6eddcb7214d0af069f6b085"
-    },
-    {
-      "name": "testing/render-simulator-powershell",
-      "title": "Render Simulator (PowerShell)",
-      "description": "A no-op render that sleeps per frame. Runs a PowerShell script; for Windows workers without a bash shell.",
-      "category": "Testing",
-      "version": "1.0.0",
-      "definition": "presets/testing/render-simulator-powershell.yaml",
-      "sha256": "764f2c15fe56a24d966eb2d63b319a87b85f096650a98c7c7a791da40894ad50"
     }
   ]
 }
