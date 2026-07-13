@@ -1,6 +1,96 @@
 {
   "presets": [
     {
+      "name": "blender-batch-render",
+      "title": "Blender Batch Render",
+      "description": "Renders a saved .blend file headless, one frame per task by default; raise the task chunk size to batch a frame range per Blender launch. Requires workers tagged blender=true with blender on PATH. Leave Output Path blank to use the scene's own output setting, or set it to override. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/blender-batch-render.yaml",
+      "sha256": "3a0f6288df50c8d176e514c61390de425b19da13e8547218c6e9d0297c1c4aec"
+    },
+    {
+      "name": "houdini-rop-render",
+      "title": "Houdini ROP Render",
+      "description": "Renders a ROP from a saved hip file with hython, in frame chunks. Requires workers tagged houdini=true with hython on PATH. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/houdini-rop-render.yaml",
+      "sha256": "4d7d2fd1c524e16f9c67acf061161f5b0f246c61bc80617e934cbcb5c5b4feac"
+    },
+    {
+      "name": "maya-layer-render",
+      "title": "Maya Layer Render",
+      "description": "Renders one render layer of a saved Maya scene with the Render batch command, one frame per task by default; raise the task chunk size to batch multiple frames per Render launch. Requires workers tagged maya=true with Render on PATH. For all renderable layers use maya-scene-render. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/maya-layer-render.yaml",
+      "sha256": "b15fc17ef2735f27280388838c12c5468a4f7c42b60d98c41bbfe821659771c5"
+    },
+    {
+      "name": "maya-scene-render",
+      "title": "Maya Scene Render",
+      "description": "Renders a saved Maya scene's renderable layers (whatever the scene's render settings mark renderable), one frame per task by default; raise the task chunk size to batch multiple frames per Render launch. Requires workers tagged maya=true with Render on PATH. For a single render layer use maya-layer-render. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/maya-scene-render.yaml",
+      "sha256": "1254b15ce4d1dcc2268b5a3b2151b28f1f04c64baf78362b6d73a91697f6390c"
+    },
+    {
+      "name": "nuke-script-render",
+      "title": "Nuke Script Render",
+      "description": "Renders all enabled Write nodes of a saved Nuke script in frame chunks. Requires workers tagged nuke=true with nuke on PATH. For a single Write node use nuke-write-render. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/nuke-script-render.yaml",
+      "sha256": "aa5f11cd9d0f135af35617d6e56ac84216699ce75baac7ce358106d21ac0b811"
+    },
+    {
+      "name": "nuke-write-render",
+      "title": "Nuke Write Render",
+      "description": "Renders one Write node from a saved Nuke script in frame chunks. Requires workers tagged nuke=true with nuke on PATH. A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/nuke-write-render.yaml",
+      "sha256": "7d16a92895fb0b4e5ed9b114d7de83f4a78230420330e8b88468c5934504c983"
+    },
+    {
+      "name": "test-render-bash",
+      "title": "Test Render (Bash)",
+      "description": "No-op render simulator: sleeps per frame and can inject failures, hangs, progress, and placeholder output. Runs a bash script; use on Linux, macOS, or any worker with bash. A test/QA job, not a real renderer. Keep Sleep (seconds) under 120 (the per-task timeout guardrail); Hang Frames sleep past it to exercise the timeout path.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "testing/test-render-bash.yaml",
+      "sha256": "e0a5baaa7298fcc160322cbb2ce32f337bfd1b9a7997fdb81385a671077b4d02"
+    },
+    {
+      "name": "test-render-powershell",
+      "title": "Test Render (PowerShell)",
+      "description": "No-op render simulator: sleeps per frame and can inject failures, hangs, progress, and placeholder output. Runs a PowerShell script; for Windows workers. A test/QA job, not a real renderer. Keep Sleep (seconds) under 120 (the per-task timeout guardrail); Hang Frames sleep past it to exercise the timeout path.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "testing/test-render-powershell.yaml",
+      "sha256": "7bd7de052ee939b0a08c627827367740b2a5bc19e8b0c30a843ed54e6273d3ca"
+    },
+    {
+      "name": "test-steps-bash",
+      "title": "Test Steps (Bash)",
+      "description": "Multi-step no-op job (render then publish then notify) that exercises step dependency gating: publish waits for all render tasks; notify waits for both render and publish. Runs bash scripts. A test/QA job, not a real renderer.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "testing/test-steps-bash.yaml",
+      "sha256": "78f78fc3a3bf9ac0a4db164838b4aa94ef3e3955f3f8f3508e234e49f63aafd5"
+    },
+    {
+      "name": "test-steps-powershell",
+      "title": "Test Steps (PowerShell)",
+      "description": "Multi-step no-op job (render then publish then notify) that exercises step dependency gating: publish waits for all render tasks; notify waits for both render and publish. Runs PowerShell scripts; for Windows workers. A test/QA job, not a real renderer.",
+      "category": "Testing",
+      "version": "1.0.0",
+      "definition": "testing/test-steps-powershell.yaml",
+      "sha256": "121e94404a00480dea039039dc2f9de484e7cae9c97cbbae8de81b66e55a885d"
+    },
+    {
       "name": "testing/render-simulator-bash",
       "title": "Render Simulator (Bash)",
       "description": "A no-op render that sleeps per frame. Runs a bash script; use on Linux/macOS or any worker with a bash shell.",
