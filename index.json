@@ -7,7 +7,52 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/blender-batch-render.yaml",
-      "sha256": "3a0f6288df50c8d176e514c61390de425b19da13e8547218c6e9d0297c1c4aec"
+      "sha256": "720b7149deeed24f158ae226a3a0d87b8f26fbbf78ab8a3da2f16d459a8c1849"
+    },
+    {
+      "name": "ffmpeg-segment-transcode-bash",
+      "title": "FFmpeg Segment Transcode (Bash)",
+      "description": "Splits a video into fixed-length slices, transcodes each on a different worker, then joins them with a bash script, so it needs Linux or macOS workers.",
+      "category": "Transcoding",
+      "version": "1.0.0",
+      "definition": "sqi/ffmpeg-segment-transcode-bash.yaml",
+      "sha256": "2e7d6860f6db4fb5caba5568e4dc946f22be04e779638d66153c9062ff82d96e"
+    },
+    {
+      "name": "ffmpeg-segment-transcode-expr",
+      "title": "FFmpeg Segment Transcode (Portable)",
+      "description": "Splits a video into fixed-length slices, transcodes each on a different worker, then joins them with a template-generated file list so it runs on Linux, macOS and Windows workers alike.",
+      "category": "Transcoding",
+      "version": "1.0.0",
+      "definition": "sqi/ffmpeg-segment-transcode-expr.yaml",
+      "sha256": "b7d972a450a8ec996910acdeed86bd7cea1fa054f2cdfb61bfcb683e9ea745d4"
+    },
+    {
+      "name": "ffmpeg-segment-transcode-powershell",
+      "title": "FFmpeg Segment Transcode (PowerShell)",
+      "description": "Splits a video into fixed-length slices, transcodes each on a different worker, then joins them with a PowerShell script, so it needs Windows workers.",
+      "category": "Transcoding",
+      "version": "1.0.0",
+      "definition": "sqi/ffmpeg-segment-transcode-powershell.yaml",
+      "sha256": "7cb2d2aae9cb3262fbd60f605021eb7eaee0e9b464a924708306d073f68f5ba4"
+    },
+    {
+      "name": "ffmpeg-sequence-encode",
+      "title": "FFmpeg Sequence Encode",
+      "description": "Turns a rendered image sequence into a movie on one worker - the step that follows a render job. Point Source Pattern at the sequence using ffmpeg's printf-style numbering (for example render_%04d.exr); the movie is named after it, so render_%04d.exr produces render.mp4 in the output directory. Requires ffmpeg on PATH. A starting point - duplicate to customize for your pipeline.",
+      "category": "Transcoding",
+      "version": "1.0.0",
+      "definition": "sqi/ffmpeg-sequence-encode.yaml",
+      "sha256": "1f25fd4e924496e4d743f4ada2d74e9252eeac3931079a15acf8986b7d7cc7dd"
+    },
+    {
+      "name": "ffmpeg-transcode",
+      "title": "FFmpeg Transcode",
+      "description": "Converts one video file on one worker, start to finish. Base-spec OpenJD with no extensions, so it runs on any worker tagged ffmpeg=true whatever that worker's EXPR limits are. Use a segment variant instead to spread a long source across the farm. Requires ffmpeg on PATH. A starting point - duplicate to customize for your pipeline.",
+      "category": "Transcoding",
+      "version": "1.0.0",
+      "definition": "sqi/ffmpeg-transcode.yaml",
+      "sha256": "b04def4bfe4cc81e3893c3217bf29bfce3c826ca02d7e60ca9c32f03adb12b4b"
     },
     {
       "name": "houdini-rop-render",
@@ -16,7 +61,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/houdini-rop-render.yaml",
-      "sha256": "4d7d2fd1c524e16f9c67acf061161f5b0f246c61bc80617e934cbcb5c5b4feac"
+      "sha256": "3c3c1e72ea55023245fa1cc48a7ea73ee7a7b885549e138e0cea9e4117ba15ba"
     },
     {
       "name": "maya-layer-render",
@@ -25,7 +70,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-layer-render.yaml",
-      "sha256": "b15fc17ef2735f27280388838c12c5468a4f7c42b60d98c41bbfe821659771c5"
+      "sha256": "8c41c458f70c49c181576dd0ae6b1d02bdc674167bf8ae61edb06f1697052f58"
     },
     {
       "name": "maya-scene-render",
@@ -34,7 +79,34 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-scene-render.yaml",
-      "sha256": "1254b15ce4d1dcc2268b5a3b2151b28f1f04c64baf78362b6d73a91697f6390c"
+      "sha256": "f3ea3833957ae82c3e73269285f14766707c2f29db8e3116a40eeacf115632cb"
+    },
+    {
+      "name": "mistika-boutique-render",
+      "title": "Mistika Ultima \u0026 Boutique Render",
+      "description": "Renders a saved Mistika .rnd job with the mistika binary, in frame chunks. Requires workers tagged mistika=true with mistika on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/mistika-boutique-render.yaml",
+      "sha256": "386d816a190ba2a8a97a98e708ae93b9c67b9560607a5b6edbbd53f12b8eb63d"
+    },
+    {
+      "name": "mistika-vr-render",
+      "title": "Mistika VR Render",
+      "description": "Renders a saved Mistika VR .rnd job with the vr binary, in frame chunks. Requires workers tagged mistikavr=true with vr on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/mistika-vr-render.yaml",
+      "sha256": "f42d3b2e4a59049557066ed97a9118b9792562729fc9f78127424605a76940a4"
+    },
+    {
+      "name": "mistika-workflows-render",
+      "title": "Mistika Workflows Render",
+      "description": "Renders a saved Mistika Workflows .rnd job with the workflows binary, in frame chunks. Requires workers tagged mistikaworkflows=true with workflows on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/mistika-workflows-render.yaml",
+      "sha256": "27007943d44c2a55c30e8d32966403b201535aff47f3e90f076f91086b090128"
     },
     {
       "name": "nuke-script-render",
@@ -43,7 +115,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-script-render.yaml",
-      "sha256": "aa5f11cd9d0f135af35617d6e56ac84216699ce75baac7ce358106d21ac0b811"
+      "sha256": "12c7e16d5d0eb1fcefd4af7049cdcca3c89295406de387647c9551cda31e1a69"
     },
     {
       "name": "nuke-write-render",
@@ -52,7 +124,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-write-render.yaml",
-      "sha256": "7d16a92895fb0b4e5ed9b114d7de83f4a78230420330e8b88468c5934504c983"
+      "sha256": "a6edaed8797b14225b327da9e45a1368496a5749ebd4fc293dc5d040a83f4ded"
     },
     {
       "name": "test-render-bash",
@@ -61,7 +133,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-bash.yaml",
-      "sha256": "e0a5baaa7298fcc160322cbb2ce32f337bfd1b9a7997fdb81385a671077b4d02"
+      "sha256": "9b37d8eb6bcd126d5cd7ac2251372c20ae79f50a43e0fb60279764b10666914b"
     },
     {
       "name": "test-render-powershell",
@@ -70,7 +142,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-powershell.yaml",
-      "sha256": "7bd7de052ee939b0a08c627827367740b2a5bc19e8b0c30a843ed54e6273d3ca"
+      "sha256": "b82d8018700c5ad2cf026328d6d39f24031b49a3e35eb32ff7a8229c9a3f1a5a"
     },
     {
       "name": "test-steps-bash",
@@ -79,7 +151,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-bash.yaml",
-      "sha256": "78f78fc3a3bf9ac0a4db164838b4aa94ef3e3955f3f8f3508e234e49f63aafd5"
+      "sha256": "a5cb9af773bfc4a0e8f282d6f9596fe0549643d86b9da5e248ddd190a3ee51fa"
     },
     {
       "name": "test-steps-powershell",
@@ -88,7 +160,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-powershell.yaml",
-      "sha256": "121e94404a00480dea039039dc2f9de484e7cae9c97cbbae8de81b66e55a885d"
+      "sha256": "fd93bd13f8ff2375d67bcbf3c3f224982b559f17676f21f906f5d4a359345d60"
     }
   ]
 }
