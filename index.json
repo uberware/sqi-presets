@@ -3,11 +3,11 @@
     {
       "name": "blender-batch-render",
       "title": "Blender Batch Render",
-      "description": "Renders a saved .blend file headless, one frame per task by default; raise the task chunk size to batch a frame range per Blender launch. Requires workers tagged blender=true with blender on PATH. Leave Output Path blank to use the scene's own output setting, or set it to override. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders a saved .blend file headless with Blender's batch mode, one frame per task by default.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/blender-batch-render.yaml",
-      "sha256": "720b7149deeed24f158ae226a3a0d87b8f26fbbf78ab8a3da2f16d459a8c1849"
+      "sha256": "30c18bc2b5c2c408bbac8eb4d13be1935d2b3a8bb18f0358f634c90fae13e8bc"
     },
     {
       "name": "ffmpeg-segment-transcode-bash",
@@ -16,7 +16,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-bash.yaml",
-      "sha256": "2e7d6860f6db4fb5caba5568e4dc946f22be04e779638d66153c9062ff82d96e"
+      "sha256": "7f8e35ee0c52c9cf0b7a16e8e54787a30d3d96aee059c5abe3effe5d5756644f"
     },
     {
       "name": "ffmpeg-segment-transcode-expr",
@@ -25,7 +25,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-expr.yaml",
-      "sha256": "b7d972a450a8ec996910acdeed86bd7cea1fa054f2cdfb61bfcb683e9ea745d4"
+      "sha256": "7676ac5da93605ce0054848da10fbebe8212d89e27761ba4a1aff33271c1adeb"
     },
     {
       "name": "ffmpeg-segment-transcode-powershell",
@@ -34,133 +34,133 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-powershell.yaml",
-      "sha256": "7cb2d2aae9cb3262fbd60f605021eb7eaee0e9b464a924708306d073f68f5ba4"
+      "sha256": "d15f9c4b1f2bd70036f68731376a629cab3f9aa8b0bc73e767be1049260989dc"
     },
     {
       "name": "ffmpeg-sequence-encode",
       "title": "FFmpeg Sequence Encode",
-      "description": "Turns a rendered image sequence into a movie on one worker - the step that follows a render job. Point Source Pattern at the sequence using ffmpeg's printf-style numbering (for example render_%04d.exr); the movie is named after it, so render_%04d.exr produces render.mp4 in the output directory. Requires ffmpeg on PATH. A starting point - duplicate to customize for your pipeline.",
+      "description": "Encodes a numbered image sequence into a single video file on one worker.",
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-sequence-encode.yaml",
-      "sha256": "1f25fd4e924496e4d743f4ada2d74e9252eeac3931079a15acf8986b7d7cc7dd"
+      "sha256": "9251fd95c34f75772d1ca97bc69025db385914f4c62dea70ca6a89b401f4d120"
     },
     {
       "name": "ffmpeg-transcode",
       "title": "FFmpeg Transcode",
-      "description": "Converts one video file on one worker, start to finish. Base-spec OpenJD with no extensions, so it runs on any worker tagged ffmpeg=true whatever that worker's EXPR limits are. Use a segment variant instead to spread a long source across the farm. Requires ffmpeg on PATH. A starting point - duplicate to customize for your pipeline.",
+      "description": "Converts one video file to another format on a single worker, start to finish.",
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-transcode.yaml",
-      "sha256": "b04def4bfe4cc81e3893c3217bf29bfce3c826ca02d7e60ca9c32f03adb12b4b"
+      "sha256": "87fb7b9ef3da692bfd29cb4e43600548364a4803e329f5dcee78f7e3fe6cbea4"
     },
     {
       "name": "houdini-rop-render",
       "title": "Houdini ROP Render",
-      "description": "Renders a ROP from a saved hip file with hython, in frame chunks. Requires workers tagged houdini=true with hython on PATH. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders a ROP from a saved Houdini hip file with hython, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/houdini-rop-render.yaml",
-      "sha256": "3c3c1e72ea55023245fa1cc48a7ea73ee7a7b885549e138e0cea9e4117ba15ba"
+      "sha256": "cb6d095e7e740daf9cdf10a0e45c657f634aa3e2f9d22c2bce028717179322bd"
     },
     {
       "name": "maya-layer-render",
       "title": "Maya Layer Render",
-      "description": "Renders one render layer of a saved Maya scene with the Render batch command, one frame per task by default; raise the task chunk size to batch multiple frames per Render launch. Requires workers tagged maya=true with Render on PATH. For all renderable layers use maya-scene-render. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders one named render layer of a saved Maya scene with the Render batch command, one frame per task by default.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-layer-render.yaml",
-      "sha256": "8c41c458f70c49c181576dd0ae6b1d02bdc674167bf8ae61edb06f1697052f58"
+      "sha256": "80bd392c12ead961ff2605bcd51b3ef2925d8a3fe9561d2f6aed86c2ad87bd35"
     },
     {
       "name": "maya-scene-render",
       "title": "Maya Scene Render",
-      "description": "Renders a saved Maya scene's renderable layers (whatever the scene's render settings mark renderable), one frame per task by default; raise the task chunk size to batch multiple frames per Render launch. Requires workers tagged maya=true with Render on PATH. For a single render layer use maya-layer-render. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders every renderable layer of a saved Maya scene with the Render batch command, one frame per task by default.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-scene-render.yaml",
-      "sha256": "f3ea3833957ae82c3e73269285f14766707c2f29db8e3116a40eeacf115632cb"
+      "sha256": "983f142f7704efbf3b05d82eed313a7e68b15cb419f7e3537ebfbaf2b327da46"
     },
     {
       "name": "mistika-boutique-render",
       "title": "Mistika Ultima \u0026 Boutique Render",
-      "description": "Renders a saved Mistika .rnd job with the mistika binary, in frame chunks. Requires workers tagged mistika=true with mistika on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders a saved Mistika Boutique project on the command line, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-boutique-render.yaml",
-      "sha256": "386d816a190ba2a8a97a98e708ae93b9c67b9560607a5b6edbbd53f12b8eb63d"
+      "sha256": "0f2841dec4eec661d163e6445ea00427240624cc32bed8d06d332f82d9d09b75"
     },
     {
       "name": "mistika-vr-render",
       "title": "Mistika VR Render",
-      "description": "Renders a saved Mistika VR .rnd job with the vr binary, in frame chunks. Requires workers tagged mistikavr=true with vr on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders a saved Mistika VR project on the command line, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-vr-render.yaml",
-      "sha256": "f42d3b2e4a59049557066ed97a9118b9792562729fc9f78127424605a76940a4"
+      "sha256": "a09dabac7b676d40e5956e54e85168d8d2a37f2e7d62e6461152612f627d6229"
     },
     {
       "name": "mistika-workflows-render",
       "title": "Mistika Workflows Render",
-      "description": "Renders a saved Mistika Workflows .rnd job with the workflows binary, in frame chunks. Requires workers tagged mistikaworkflows=true with workflows on PATH. For a single movie file, submit Frames \"1\". A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders a saved Mistika Workflows graph on the command line, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-workflows-render.yaml",
-      "sha256": "27007943d44c2a55c30e8d32966403b201535aff47f3e90f076f91086b090128"
+      "sha256": "b2bdd9d9e7052599c1db1ee400cbdeed6658c18c8c1299ceaac1db55d358bb84"
     },
     {
       "name": "nuke-script-render",
       "title": "Nuke Script Render",
-      "description": "Renders all enabled Write nodes of a saved Nuke script in frame chunks. Requires workers tagged nuke=true with nuke on PATH. For a single Write node use nuke-write-render. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders every enabled Write node of a saved Nuke script, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-script-render.yaml",
-      "sha256": "12c7e16d5d0eb1fcefd4af7049cdcca3c89295406de387647c9551cda31e1a69"
+      "sha256": "a971248e218c3d49adda40c640cdea7e43427f4345e9b7e10cae1a157d3a918c"
     },
     {
       "name": "nuke-write-render",
       "title": "Nuke Write Render",
-      "description": "Renders one Write node from a saved Nuke script in frame chunks. Requires workers tagged nuke=true with nuke on PATH. A starting point - duplicate to customize for your pipeline.",
+      "description": "Renders one named Write node from a saved Nuke script, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-write-render.yaml",
-      "sha256": "a6edaed8797b14225b327da9e45a1368496a5749ebd4fc293dc5d040a83f4ded"
+      "sha256": "5d404ac3de326d5905c1302fe7ec3cd4aab1f4ae6acc7380ae5bb45f24f08e8a"
     },
     {
       "name": "test-render-bash",
       "title": "Test Render (Bash)",
-      "description": "No-op render simulator: sleeps per frame and can inject failures, hangs, progress, and placeholder output. Runs a bash script; use on Linux, macOS, or any worker with bash. A test/QA job, not a real renderer. Keep Sleep (seconds) under 120 (the per-task timeout guardrail); Hang Frames sleep past it to exercise the timeout path.",
+      "description": "Simulates a render on any worker without a renderer installed, sleeping per frame and optionally failing or hanging chosen frames.",
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-bash.yaml",
-      "sha256": "9b37d8eb6bcd126d5cd7ac2251372c20ae79f50a43e0fb60279764b10666914b"
+      "sha256": "fb5b3006e510f44fc0f549f575a6e0d91d4dc2107feae72b17f9fbf241e8a2ea"
     },
     {
       "name": "test-render-powershell",
       "title": "Test Render (PowerShell)",
-      "description": "No-op render simulator: sleeps per frame and can inject failures, hangs, progress, and placeholder output. Runs a PowerShell script; for Windows workers. A test/QA job, not a real renderer. Keep Sleep (seconds) under 120 (the per-task timeout guardrail); Hang Frames sleep past it to exercise the timeout path.",
+      "description": "Simulates a render on any Windows worker without a renderer installed, sleeping per frame and optionally failing or hanging chosen frames.",
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-powershell.yaml",
-      "sha256": "b82d8018700c5ad2cf026328d6d39f24031b49a3e35eb32ff7a8229c9a3f1a5a"
+      "sha256": "ece6723fadbb29629e2ec8e99502e26988bbb716315051f499391bc26596d1e8"
     },
     {
       "name": "test-steps-bash",
       "title": "Test Steps (Bash)",
-      "description": "Multi-step no-op job (render then publish then notify) that exercises step dependency gating: publish waits for all render tasks; notify waits for both render and publish. Runs bash scripts. A test/QA job, not a real renderer.",
+      "description": "Simulates a three-step pipeline - render, publish, notify - so step dependencies and ordering can be exercised without a renderer.",
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-bash.yaml",
-      "sha256": "a5cb9af773bfc4a0e8f282d6f9596fe0549643d86b9da5e248ddd190a3ee51fa"
+      "sha256": "fd28ffa13b8bac6102cc68fe01031c92bacf53e782ea14a18406b43d301e4f55"
     },
     {
       "name": "test-steps-powershell",
       "title": "Test Steps (PowerShell)",
-      "description": "Multi-step no-op job (render then publish then notify) that exercises step dependency gating: publish waits for all render tasks; notify waits for both render and publish. Runs PowerShell scripts; for Windows workers. A test/QA job, not a real renderer.",
+      "description": "Simulates a three-step pipeline - render, publish, notify - on Windows workers, so step dependencies can be exercised without a renderer.",
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-powershell.yaml",
-      "sha256": "fd93bd13f8ff2375d67bcbf3c3f224982b559f17676f21f906f5d4a359345d60"
+      "sha256": "7c459e27bd6356abef8c0e66669bb362cdc4329fbfa3ef4093087a8f1ae0ea2d"
     }
   ]
 }
