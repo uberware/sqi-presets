@@ -1,0 +1,116 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: husk-usd-render
+title: Husk USD Render
+description: >-
+  Renders a USD stage with SideFX husk through Karma or any Hydra delegate, one
+  frame per task by default.
+readme: |
+  # Husk USD Render
+
+  Renders a USD stage with `husk`, SideFX's command-line USD renderer, without
+  opening Houdini. `husk` renders through Karma or any other Hydra delegate
+  installed on the worker.
+
+  ## Parameters
+
+  - **Scene File** - the USD stage to render (`.usd`, `.usda`, `.usdc` or
+    `.usdz`). It must be reachable from every worker that runs the job.
+  - **Frames** - the frame range, in OpenJD range syntax, e.g. `1-100` or
+    `1-100:2` for every second frame.
+  - **Hydra Delegate** - the render delegate `husk` uses, passed as
+    `--renderer`. Leave it empty to use the delegate the stage's render
+    settings choose. `husk --list-renderers` prints the names a worker
+    accepts.
+
+  ## How work is divided
+
+  Each task renders one frame: the task passes `husk` its frame as the first
+  frame and a frame count of 1. A stepped range such as `1-100:2` runs one
+  task per frame in the range, so `husk` never renders a frame the range
+  leaves out.
+
+  ## Output
+
+  Output paths come from the stage's render products, and `husk` creates any
+  missing output folders. Each product's name must hold a frame variable, such
+  as `$F4` in `shot.$F4.exr`. With none, every frame writes the same file. A
+  stage with no render product writes every frame to `karma.exr` in the
+  task's working folder, which sqi deletes when the task ends.
+
+  ## Progress
+
+  The task's progress bar follows the percentage `husk` prints as it renders,
+  so it moves within a frame as well as from one frame to the next.
+
+  ## Requirements
+
+  - Workers tagged `attr.worker.tag.husk = true`
+  - `husk` on the worker's `PATH`, or Houdini's own, which the worker finds at
+    the default install location on Windows, and on Linux at `/opt/hfs*`
+    
+  - A Houdini license available to `husk`, and a Karma license when rendering
+    with Karma
+category: Rendering
+version: 1.0.0
+template:
+  specificationVersion: jobtemplate-2023-09
+  name: Husk USD Render
+  extensions: [TASK_CHUNKING, EXPR, SQI_LOG_PROGRESS]
+  parameterDefinitions:
+    - name: SceneFile
+      type: PATH
+      objectType: FILE
+      dataFlow: IN
+      userInterface:
+        control: CHOOSE_INPUT_FILE
+        label: Scene File
+        fileFilters:
+          - label: USD stages
+            patterns: ["*.usd", "*.usda", "*.usdc", "*.usdz"]
+        fileFilterDefault:
+          label: USD stages
+          patterns: ["*.usd", "*.usda", "*.usdc", "*.usdz"]
+    - name: Frames
+      type: STRING
+      userInterface: { control: LINE_EDIT, label: Frame Range }
+    - name: Renderer
+      type: STRING
+      default: ""
+      userInterface: { control: LINE_EDIT, label: Hydra Delegate }
+  steps:
+    - name: Render
+      hostRequirements:
+        attributes:
+          - name: attr.worker.tag.husk
+            anyOf: ["true"]
+      parameterSpace:
+        taskParameterDefinitions:
+          - name: Frame
+            type: CHUNK[INT]
+            range: "{{Param.Frames}}"
+            chunks:
+              defaultTaskCount: 1
+              rangeConstraint: CONTIGUOUS
+      SQI_LOG_PROGRESS:
+        # The "a" in -V 2a turns on ALF_PROGRESS lines, the percent through
+        # the whole run, which is the task's chunk. Each frame starts with a
+        # ">>> Render <image> (i of n) - WxH" line.
+        progress:
+          - '^ALF_PROGRESS (?P<percent>\d+)%'
+        status:
+          - '>>> Render (?:.*[/\\])?(?P<status>[^/\\]+ \(\d+ of \d+\)) - \d+x\d+ '
+      script:
+        actions:
+          onRun:
+            command: husk
+            args:
+              - "{{ ['--renderer', Param.Renderer] if Param.Renderer != '' else [] }}"
+              - "--frame"
+              - "{{ min(Task.Param.Frame) }}"
+              - "--frame-count"
+              - "{{ len(Task.Param.Frame) }}"
+              - "--make-output-path"
+              - "--no-mplay"
+              - "-V"
+              - "2a"
+              - "{{Param.SceneFile}}"

@@ -1,13 +1,94 @@
 {
   "presets": [
     {
+      "name": "3delight-render",
+      "title": "3Delight Render",
+      "description": "Renders exported 3Delight NSI files with renderdl, one frame per task.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/3delight-render.yaml",
+      "sha256": "be65a2f31e7488e7188934938a0f9e01bd03319aa43c730df55219d7629f129e"
+    },
+    {
+      "name": "3dsmax-render",
+      "title": "3ds Max Render",
+      "description": "Renders a saved 3ds Max scene headless with 3dsmaxcmd on Windows workers, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/3dsmax-render.yaml",
+      "sha256": "858586c176cc103192bd20206c3e237640859bb7859f466b97bcba553eda333c"
+    },
+    {
+      "name": "after-effects-queue-render",
+      "title": "After Effects Queue Render",
+      "description": "Renders everything a saved After Effects project has queued, as one task on one Windows or macOS worker, with aerender.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/after-effects-queue-render.yaml",
+      "sha256": "7849028b1faade004ec29cfa5d0fe5a91de2eb19e73ff85906bf0fcb76e881d8"
+    },
+    {
+      "name": "after-effects-render",
+      "title": "After Effects Render",
+      "description": "Renders one render-queue item of a saved After Effects project with aerender on Windows or macOS workers, up to ten frames per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/after-effects-render.yaml",
+      "sha256": "a913dc51b2e38e318c05221699b05ce2bdffd2799f7bbac6378af32b74abb62b"
+    },
+    {
+      "name": "arnold-kick-render",
+      "title": "Arnold Kick Render",
+      "description": "Renders exported Arnold scene files with kick, one frame per task.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/arnold-kick-render.yaml",
+      "sha256": "a54230e1a493e00d5dbcfaa9e41b031698fedcfa08b7c17186bee1709e835401"
+    },
+    {
+      "name": "arnold-kick-tile-render",
+      "title": "Arnold Kick Tile Render",
+      "description": "Renders each frame of exported Arnold scene files as a grid of kick render regions, then assembles the tiles into one image with oiiotool.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/arnold-kick-tile-render.yaml",
+      "sha256": "101015870355435e02cf66b99bd22b6d6a01a4d7ce49fa7de6012957d6ee4403"
+    },
+    {
       "name": "blender-batch-render",
       "title": "Blender Batch Render",
       "description": "Renders a saved .blend file headless with Blender's batch mode, one frame per task by default.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/blender-batch-render.yaml",
-      "sha256": "30c18bc2b5c2c408bbac8eb4d13be1935d2b3a8bb18f0358f634c90fae13e8bc"
+      "sha256": "732603ae41ff2b93284d1f808a30306d276f81a7bef762f0e155590a345f3a66"
+    },
+    {
+      "name": "blender-view-layer-render",
+      "title": "Blender View Layer Render",
+      "description": "Renders one named view layer of a saved .blend file headless with Blender's batch mode, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/blender-view-layer-render.yaml",
+      "sha256": "cbe66a6ebfe5c05e738a0f6922e77d46aae0042e29a7ec2e5902d31195a99bb5"
+    },
+    {
+      "name": "cinema4d-render",
+      "title": "Cinema 4D Render",
+      "description": "Renders a saved Cinema 4D scene headless with Commandline, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/cinema4d-render.yaml",
+      "sha256": "b5eb887ca3ba45b9d2dbdbdcbfd8b7c3b05ee67d1234009df94f767bfe53a92e"
+    },
+    {
+      "name": "cinema4d-take-render",
+      "title": "Cinema 4D Take Render",
+      "description": "Renders one named take of a saved Cinema 4D scene headless with Commandline, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/cinema4d-take-render.yaml",
+      "sha256": "9e0e7fbd5eca044fbf333cbf01becbbc2afc02503586bc6fb0951e865bc30c9f"
     },
     {
       "name": "ffmpeg-segment-transcode-bash",
@@ -16,7 +97,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-bash.yaml",
-      "sha256": "7f8e35ee0c52c9cf0b7a16e8e54787a30d3d96aee059c5abe3effe5d5756644f"
+      "sha256": "47d1535390def1578e7fc4b5dcd222e8c29d8affac0f07db5c24a7e097e9b7bb"
     },
     {
       "name": "ffmpeg-segment-transcode-expr",
@@ -25,7 +106,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-expr.yaml",
-      "sha256": "7676ac5da93605ce0054848da10fbebe8212d89e27761ba4a1aff33271c1adeb"
+      "sha256": "b2099fa0eb09abff05f635b0746950f253308e5a6eb70e6b13fd2f24ada8a896"
     },
     {
       "name": "ffmpeg-segment-transcode-powershell",
@@ -34,7 +115,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-powershell.yaml",
-      "sha256": "d15f9c4b1f2bd70036f68731376a629cab3f9aa8b0bc73e767be1049260989dc"
+      "sha256": "d694b62f9e8ec56e23420c8a415ff07fb48bc1eae0e86539f37cf2f1d945338a"
     },
     {
       "name": "ffmpeg-sequence-encode",
@@ -55,13 +136,85 @@
       "sha256": "87fb7b9ef3da692bfd29cb4e43600548364a4803e329f5dcee78f7e3fe6cbea4"
     },
     {
+      "name": "fusion-render",
+      "title": "Fusion Render",
+      "description": "Renders a saved Fusion composition with Fusion Render Node, ten frames per task by default, writing wherever the comp's Savers say.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/fusion-render.yaml",
+      "sha256": "06e4646cf7c6c612222d434661dfe0fca114671e423b442377f170d2f085b428"
+    },
+    {
+      "name": "fusion-saver-render",
+      "title": "Fusion Saver Render",
+      "description": "Renders one Saver of a saved Fusion composition with Fusion Render Node, ten frames per task by default. The Render Node runs the preset's own Lua script.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/fusion-saver-render.yaml",
+      "sha256": "ae7cc2d7b59775ed3c18046344b4c21b3f22054ab60a4b9dfcdb601e3edbd25f"
+    },
+    {
       "name": "houdini-rop-render",
       "title": "Houdini ROP Render",
       "description": "Renders a ROP from a saved Houdini hip file with hython, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/houdini-rop-render.yaml",
-      "sha256": "cb6d095e7e740daf9cdf10a0e45c657f634aa3e2f9d22c2bce028717179322bd"
+      "sha256": "0b0265c62670235346ab8b8b67a9c3b87fda2691873dd78acdc29c51b158a694"
+    },
+    {
+      "name": "husk-usd-render",
+      "title": "Husk USD Render",
+      "description": "Renders a USD stage with SideFX husk through Karma or any Hydra delegate, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/husk-usd-render.yaml",
+      "sha256": "2fae2ba5fa3cf66a63a45a7e3f46d3d9a0760769a1dd2c0979c0621cc53ea049"
+    },
+    {
+      "name": "hython-script",
+      "title": "Run a Python Script in Houdini",
+      "description": "Loads a Houdini hip file and runs a Python script in that session, once per frame or chunk of frames.",
+      "category": "General",
+      "version": "1.0.0",
+      "definition": "sqi/hython-script.yaml",
+      "sha256": "3b0a216ed432198e89dad9fadc6b4929870d691277ce2e12ef17c2991592a002"
+    },
+    {
+      "name": "katana-render",
+      "title": "Katana Render",
+      "description": "Renders one named Render node of a saved Katana project in batch mode, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/katana-render.yaml",
+      "sha256": "321b35cb6d90716741ae7f3ebd0feb0dc34acd6f04237ce9cce25e54f8b09e28"
+    },
+    {
+      "name": "keyshot-render",
+      "title": "KeyShot Render",
+      "description": "Renders a frame range of a saved KeyShot scene headless, ten frames per task by default, one numbered image file per frame.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/keyshot-render.yaml",
+      "sha256": "312db0a4e711eeadda77e38dc8e9e4a8e6a748102c05ec1a70ab6540fcfd3860"
+    },
+    {
+      "name": "keyshot-studio-render",
+      "title": "KeyShot Studio Render",
+      "description": "Renders a frame range of one named studio of a saved KeyShot scene headless, ten frames per task by default, one numbered image file per frame.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/keyshot-studio-render.yaml",
+      "sha256": "ab9adbad4b617c0931846c58409149c78fdc7ee0b130b0401205aa58de1551bb"
+    },
+    {
+      "name": "mantra-render",
+      "title": "Mantra Render",
+      "description": "Renders exported Mantra IFD files with mantra, one frame per task.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/mantra-render.yaml",
+      "sha256": "0e533d86b6242c942866da377e9c02134d238eeceb1c745f6b0773b1acfb849f"
     },
     {
       "name": "maya-layer-render",
@@ -70,7 +223,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-layer-render.yaml",
-      "sha256": "80bd392c12ead961ff2605bcd51b3ef2925d8a3fe9561d2f6aed86c2ad87bd35"
+      "sha256": "d45b12039bf3a37648e65fc3d4661dd1bab239b05d638cd685c9a15090ab70c5"
     },
     {
       "name": "maya-scene-render",
@@ -79,16 +232,16 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/maya-scene-render.yaml",
-      "sha256": "983f142f7704efbf3b05d82eed313a7e68b15cb419f7e3537ebfbaf2b327da46"
+      "sha256": "db8ddcc8c72b45d32c88b85f8491b1253d09599db2eedcab3c8886bb881f7572"
     },
     {
       "name": "mistika-boutique-render",
       "title": "Mistika Ultima \u0026 Boutique Render",
-      "description": "Renders a saved Mistika Boutique project on the command line, in frame chunks.",
+      "description": "Renders a saved Mistika Ultima or Boutique project on the command line, in frame chunks.",
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-boutique-render.yaml",
-      "sha256": "0f2841dec4eec661d163e6445ea00427240624cc32bed8d06d332f82d9d09b75"
+      "sha256": "51abe8d94069bdc2211839e6cba30e42198fb5e007c2d0590d1f71dfce6f0b5b"
     },
     {
       "name": "mistika-vr-render",
@@ -97,7 +250,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-vr-render.yaml",
-      "sha256": "a09dabac7b676d40e5956e54e85168d8d2a37f2e7d62e6461152612f627d6229"
+      "sha256": "f614463eb62ed3e410df3cc748228c075a3669d3a47c1899bb51781fbcc7e962"
     },
     {
       "name": "mistika-workflows-render",
@@ -106,7 +259,25 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/mistika-workflows-render.yaml",
-      "sha256": "b2bdd9d9e7052599c1db1ee400cbdeed6658c18c8c1299ceaac1db55d358bb84"
+      "sha256": "86e75375a873b5525c3c9565dfc3460da55ac40d02416b1f81bf427acfa20428"
+    },
+    {
+      "name": "modo-pass-group-render",
+      "title": "Modo Pass Group Render",
+      "description": "Renders one named pass group of a saved Modo scene headless with modo_cl, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/modo-pass-group-render.yaml",
+      "sha256": "f8951a785c3fb209efa0427b9506a100663fba51908a5ee3635269a691c0bb4c"
+    },
+    {
+      "name": "modo-render",
+      "title": "Modo Render",
+      "description": "Renders a frame range of a saved Modo scene headless with modo_cl, one frame per task by default, using the scene's own render outputs.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/modo-render.yaml",
+      "sha256": "44dc54656273c399745f5351def2605622f00e7d678b734520946859230eca00"
     },
     {
       "name": "nuke-script-render",
@@ -115,7 +286,7 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-script-render.yaml",
-      "sha256": "a971248e218c3d49adda40c640cdea7e43427f4345e9b7e10cae1a157d3a918c"
+      "sha256": "d5d65fc5e41efb2519a9e82425ed48e5cb99ee4f57ca2c6574b9b2996d0c100d"
     },
     {
       "name": "nuke-write-render",
@@ -124,7 +295,52 @@
       "category": "Rendering",
       "version": "1.0.0",
       "definition": "sqi/nuke-write-render.yaml",
-      "sha256": "5d404ac3de326d5905c1302fe7ec3cd4aab1f4ae6acc7380ae5bb45f24f08e8a"
+      "sha256": "de2be57349abcd11b68ea341cdc15a178d9df1646f70a90370d0f5db5b1b3169"
+    },
+    {
+      "name": "oiiotool-process",
+      "title": "OIIO Tool Process",
+      "description": "Converts or processes an image sequence with OpenImageIO's oiiotool: format conversion, resizing, colour conversion and more.",
+      "category": "Image Processing",
+      "version": "1.0.0",
+      "definition": "sqi/oiiotool-process.yaml",
+      "sha256": "9a9c420ffac80bd3360e0427e90a1f93f13d8420508dd1a0d35a9027e0ff8124"
+    },
+    {
+      "name": "prman-render",
+      "title": "RenderMan Render",
+      "description": "Renders exported RenderMan RIB files with prman, one frame per task.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/prman-render.yaml",
+      "sha256": "2b6a4ab70346b9e98155e3f90312875ffe1e797d5655bb282bcf0ae68b142060"
+    },
+    {
+      "name": "redshift-standalone-render",
+      "title": "Redshift Standalone Render",
+      "description": "Renders exported Redshift scene files with redshiftCmdLine, one frame per task.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/redshift-standalone-render.yaml",
+      "sha256": "5740487b122a0506b32b5bd5c5abe6b0a680d616c0e7729fbb794c5790723489"
+    },
+    {
+      "name": "silhouette-render",
+      "title": "Silhouette Render",
+      "description": "Renders one named output node of one session of a saved Silhouette project with sfxcmd, ten frames per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/silhouette-render.yaml",
+      "sha256": "6cc1b5c8e2a7a25f2860dfca20956b33302aae10e0115442ccc2ae77709363f9"
+    },
+    {
+      "name": "silhouette-render-all",
+      "title": "Silhouette Render All",
+      "description": "Renders every output node of the active session of a saved Silhouette project with sfxcmd, ten frames per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/silhouette-render-all.yaml",
+      "sha256": "c22f89074a1cb3e4837dd70da08138fa42859ccec75071bd645925081d5c6fcb"
     },
     {
       "name": "test-render-bash",
@@ -133,7 +349,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-bash.yaml",
-      "sha256": "fb5b3006e510f44fc0f549f575a6e0d91d4dc2107feae72b17f9fbf241e8a2ea"
+      "sha256": "27bd98213af91f794e8ca6f30ce1e35483eaa140a7a47bad8f89e1e8549e7b48"
     },
     {
       "name": "test-render-powershell",
@@ -142,7 +358,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-render-powershell.yaml",
-      "sha256": "ece6723fadbb29629e2ec8e99502e26988bbb716315051f499391bc26596d1e8"
+      "sha256": "2b223dd24d4868e9d6a5f54ac0c7e0d3eb2e81f1d1b692277f5017e879cb5087"
     },
     {
       "name": "test-steps-bash",
@@ -151,7 +367,7 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-bash.yaml",
-      "sha256": "fd28ffa13b8bac6102cc68fe01031c92bacf53e782ea14a18406b43d301e4f55"
+      "sha256": "e5d63d899f9f34a94616beb713c9d461ed9f9eb953a9ff6623722b8429245e93"
     },
     {
       "name": "test-steps-powershell",
@@ -160,7 +376,70 @@
       "category": "Testing",
       "version": "1.0.0",
       "definition": "testing/test-steps-powershell.yaml",
-      "sha256": "7c459e27bd6356abef8c0e66669bb362cdc4329fbfa3ef4093087a8f1ae0ea2d"
+      "sha256": "7d4a8be7ed31e04011686f6a31de61d49f153f30c5948981d5d4a0125a7e5007"
+    },
+    {
+      "name": "unreal-mrq-job-render",
+      "title": "Unreal Movie Render Queue Job Render",
+      "description": "Renders one level sequence on one map with one Movie Render Queue config in an Unreal Engine 5 project, as a single task on a Windows or macOS worker, through the preset's own Python script.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/unreal-mrq-job-render.yaml",
+      "sha256": "9226645a97e0cfbaf97785a150456c9a18b06724c97ed7f50e1083d39d85d59a"
+    },
+    {
+      "name": "unreal-mrq-queue-render",
+      "title": "Unreal Movie Render Queue Queue Render",
+      "description": "Renders every job of a saved Movie Pipeline Queue asset in an Unreal Engine 5 project, as a single task on a Windows or macOS worker, through the preset's own Python script.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/unreal-mrq-queue-render.yaml",
+      "sha256": "b9783f5857b2fd0d4979109a447cca4a698e5578c52c335b26a78a1ba82b1912"
+    },
+    {
+      "name": "unreal-mrq-shot-render",
+      "title": "Unreal Movie Render Queue Shot Render",
+      "description": "Renders one level sequence on one map with one Movie Render Queue config in an Unreal Engine 5 project, one task per shot, on Windows or macOS workers, through the preset's own Python script.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/unreal-mrq-shot-render.yaml",
+      "sha256": "156c3d92b35566cf9d488e4a08bb78e47e2897631eef659b0e7bfa9007451525"
+    },
+    {
+      "name": "usdrecord-render",
+      "title": "USD Record Render",
+      "description": "Renders image frames of a USD stage with Houdini's usdrecord, for quick review renders and turntables.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/usdrecord-render.yaml",
+      "sha256": "acc36390e57ebc25be174d9ac13331d4fec9d9e495e2315fb43db6b0487836fc"
+    },
+    {
+      "name": "vray-standalone-render",
+      "title": "V-Ray Standalone Render",
+      "description": "Renders an exported V-Ray scene with V-Ray Standalone, one frame per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/vray-standalone-render.yaml",
+      "sha256": "013b04f0cbe09bccfc337dbe41d1bb9ff0e9a8e3f45aa4552039b677b9045192"
+    },
+    {
+      "name": "vred-render",
+      "title": "VRED Render",
+      "description": "Renders a saved VRED scene headless with VRED Core, ten frames per task by default, using the scene's own render settings.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/vred-render.yaml",
+      "sha256": "10d4760c9ce7cd291f8c101e7b0ae576c1584e37f8e14b88da6a5caa8f9d4cca"
+    },
+    {
+      "name": "vred-viewpoint-render",
+      "title": "VRED Viewpoint Render",
+      "description": "Renders one named viewpoint or camera of a saved VRED scene headless with VRED Core, ten frames per task by default.",
+      "category": "Rendering",
+      "version": "1.0.0",
+      "definition": "sqi/vred-viewpoint-render.yaml",
+      "sha256": "dc664ae8f5693726cc64f2086c1c377131e6bd87e125d0b281629906b888f1dc"
     }
   ]
 }

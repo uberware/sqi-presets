@@ -10,34 +10,42 @@ readme: |
   script leaves enabled. Use Nuke Write Render instead to render one named Write
   node.
 
-  Each task renders a contiguous chunk of frames, ten per task by default.
-
   ## Parameters
 
   - **Scene File** - the `.nk` script to render. It must be reachable from every
-    worker that runs the job.
+    worker that runs the job. A worker running Non-commercial Nuke renders only
+    scripts saved by Non-commercial Nuke (`.nknc`), not a plain `.nk` from a
+    commercial Nuke.
   - **Frames** - the frame range, in OpenJD range syntax, e.g. `1-100` or
     `1-100:2` for every second frame.
 
   ## How work is divided
 
-  The frame range expands into tasks through OpenJD task chunking, ten frames per
-  task by default. Each task receives its own frames as a list and passes them to
-  Nuke's `-F` flag directly, so this preset needs no chunk-bounds extension.
+  The frame range expands into tasks through OpenJD task chunking, up to ten
+  frames per task by default. Each task passes its frames, as a `start-end`
+  range, to Nuke's `-F` flag directly, so this preset needs no chunk-bounds
+  extension. A chunk never spans a gap, so a stepped range such as `1-100:2`
+  becomes one task per frame.
 
-  Raise or lower the chunk size to trade parallelism against the cost of loading
-  the script once per task.
+  Change the step's `chunks.defaultTaskCount` to trade parallelism against the
+  cost of loading the script once per task.
+
+  The task's progress bar moves as Nuke finishes each frame, once every
+  enabled Write node has written it.
 
   ## Requirements
 
   - Workers tagged `attr.worker.tag.nuke = true`
-  - `nuke` on the worker's `PATH`
+  - A `nuke` command the worker can resolve: its `worker.commands` entry, a
+    `nuke` on its `PATH`, or the Nuke install it detects. Non-commercial Nuke
+    also needs `args: ["--nc"]` in that entry, and its output is limited to
+    1920 x 1080.
 category: Rendering
 version: 1.0.0
 template:
   specificationVersion: jobtemplate-2023-09
   name: Nuke Script Render
-  extensions: [TASK_CHUNKING]
+  extensions: [TASK_CHUNKING, SQI_LOG_PROGRESS]
   parameterDefinitions:
     - name: SceneFile
       type: PATH
@@ -61,6 +69,16 @@ template:
             chunks:
               defaultTaskCount: 10
               rangeConstraint: CONTIGUOUS
+      SQI_LOG_PROGRESS:
+        # Nuke 17.1v2 prints "Frame N (i of n)" on a line of its own once the
+        # last Write node has written a frame, once per frame however many
+        # Write nodes render (sample output: test/integration/testdata/progress).
+        # The "Writing ... took" lines before it repeat once per Write node
+        # and do not match.
+        progress:
+          - '^Frame (?P<framedone>-?\d+) \(\d+ of \d+\)'
+        status:
+          - '^(?P<status>Frame -?\d+ \(\d+ of \d+\))'
       script:
         actions:
           onRun:
