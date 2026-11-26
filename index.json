@@ -97,7 +97,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-bash.yaml",
-      "sha256": "47d1535390def1578e7fc4b5dcd222e8c29d8affac0f07db5c24a7e097e9b7bb"
+      "sha256": "42c71f19b1efbddcffca3822be464cd8b0f742bdc7aee9e674e52243e5c544db"
     },
     {
       "name": "ffmpeg-segment-transcode-expr",
@@ -106,7 +106,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-expr.yaml",
-      "sha256": "b2099fa0eb09abff05f635b0746950f253308e5a6eb70e6b13fd2f24ada8a896"
+      "sha256": "238fd064026e7941e0ef874f7552e470d62171adfdbebfedd416f1ec89015529"
     },
     {
       "name": "ffmpeg-segment-transcode-powershell",
@@ -115,7 +115,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-segment-transcode-powershell.yaml",
-      "sha256": "d694b62f9e8ec56e23420c8a415ff07fb48bc1eae0e86539f37cf2f1d945338a"
+      "sha256": "b5af8e992ffd8e4403158344a9a4c35bbb207f72701c8f1efccf8637864a76b6"
     },
     {
       "name": "ffmpeg-sequence-encode",
@@ -124,7 +124,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-sequence-encode.yaml",
-      "sha256": "9251fd95c34f75772d1ca97bc69025db385914f4c62dea70ca6a89b401f4d120"
+      "sha256": "b37ff586439a211efd90a4920d1918cd9d26f2844ff512a199ed53aa9c9ae65c"
     },
     {
       "name": "ffmpeg-transcode",
@@ -133,7 +133,7 @@
       "category": "Transcoding",
       "version": "1.0.0",
       "definition": "sqi/ffmpeg-transcode.yaml",
-      "sha256": "87fb7b9ef3da692bfd29cb4e43600548364a4803e329f5dcee78f7e3fe6cbea4"
+      "sha256": "4503e42c0737c4cc385aa51725a295ff8dbc8666be2b566f21a1a35c7a90ab9d"
     },
     {
       "name": "fusion-render",
